@@ -2,11 +2,13 @@ import { notFound } from 'next/navigation';
 import { getTenant } from '@/lib/tenant';
 
 interface Props {
-  params: { subdomain: string };
+  params: Promise<{ subdomain: string }>;
 }
 
 export default async function TenantPage({ params }: Props) {
-  const tenant = await getTenant(params.subdomain);
+  const { subdomain } = await params;
+
+  const tenant = await getTenant(subdomain);
 
   if (!tenant) notFound();
 
