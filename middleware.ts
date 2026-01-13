@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { env } from '@/env';
+import { env } from './env';
 
 export function middleware(req: NextRequest) {
   const host = req.headers.get('host');
@@ -7,10 +7,12 @@ export function middleware(req: NextRequest) {
 
   const hostname = host.split(':')[0];
 
+  // Root domain → normal app
   if (hostname === env.ROOT_DOMAIN) {
     return NextResponse.next();
   }
 
+  // Subdomain handling
   if (hostname.endsWith(`.${env.ROOT_DOMAIN}`)) {
     const subdomain = hostname.replace(`.${env.ROOT_DOMAIN}`, '');
     const url = req.nextUrl.clone();

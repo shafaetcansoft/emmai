@@ -34,6 +34,7 @@ export default function HomePage() {
           className="border px-3 py-2 w-full"
           value={name}
           onChange={e => setName(e.target.value)}
+          placeholder="yourname"
         />
 
         {error && <p className="text-red-600 text-sm">{error}</p>}
