@@ -5,8 +5,8 @@ interface Props {
   params: { subdomain: string };
 }
 
-export default function TenantPage({ params }: Props) {
-  const tenant = getTenant(params.subdomain);
+export default async function TenantPage({ params }: Props) {
+  const tenant = await getTenant(params.subdomain);
 
   if (!tenant) notFound();
 

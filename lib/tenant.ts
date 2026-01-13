@@ -1,18 +1,18 @@
-import { tenantDB } from './db/memory';
-import { isValidSubdomain } from './valication';
+import { tenantDB } from './db/kv';
+import { isValidSubdomain } from './validation';
 
-export function createTenant(subdomain: string) {
+export async function createTenant(subdomain: string) {
   if (!isValidSubdomain(subdomain)) {
     throw new Error('Invalid subdomain format');
   }
 
-  if (tenantDB.exists(subdomain)) {
+  if (await tenantDB.exists(subdomain)) {
     throw new Error('Domain already exists');
   }
 
   return tenantDB.create(subdomain);
 }
 
-export function getTenant(subdomain: string) {
+export async function getTenant(subdomain: string) {
   return tenantDB.get(subdomain);
 }
